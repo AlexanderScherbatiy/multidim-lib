@@ -7,9 +7,9 @@ import org.multidim.complex.Complex;
 import org.multidim.complex.ComplexCalculator;
 import org.multidim.complex.ComplexOperation;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class SimpleComplexCalculatorTest {
+class SimpleComplexCalculatorPolarTest {
 
     private static final double PRECISION = 0.01;
 
@@ -26,7 +26,7 @@ class SimpleComplexCalculatorTest {
         ComplexOperation c = ComplexOperation.from(new Complex.Cartesian(-1, 2));
         ComplexOperation negate = c.negate();
 
-        ComplexCalculator calculator = new SimpleComplexCalculator();
+        ComplexCalculator calculator = new SimpleComplexCalculator(SimpleComplexCalculator.Strategy.POLAR);
         ComplexCalculator.Result result = calculator.calculate(negate);
 
         assertEquals(result.getReal(), 1.0, PRECISION);
@@ -39,7 +39,7 @@ class SimpleComplexCalculatorTest {
         ComplexOperation c2 = ComplexOperation.from(new Complex.Cartesian(3, -4));
         ComplexOperation sum = c1.add(c2);
 
-        ComplexCalculator calculator = new SimpleComplexCalculator();
+        ComplexCalculator calculator = new SimpleComplexCalculator(SimpleComplexCalculator.Strategy.POLAR);
         ComplexCalculator.Result result = calculator.calculate(sum);
 
         assertEquals(result.getReal(), 4.0, PRECISION);
