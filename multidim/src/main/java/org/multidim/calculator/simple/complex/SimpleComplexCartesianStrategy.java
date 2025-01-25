@@ -19,7 +19,7 @@ class SimpleComplexCartesianStrategy {
             }
             case Complex.Polar polar -> {
                 result.real = polar.radius() * Math.cos(polar.angle());
-                result.image = polar.radius() * Math.cos(polar.angle());
+                result.image = polar.radius() * Math.sin(polar.angle());
             }
         }
     }
