@@ -5,11 +5,18 @@ import org.multidim.complex.Complex;
 import org.multidim.complex.ComplexCalculator;
 import org.multidim.complex.ComplexOperation;
 
+import java.util.Random;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public abstract class SimpleComplexCalculatorBaseTest {
 
     private static final double PRECISION = 0.01;
+
+    private static final double MIN = -1000.0;
+    private static final double MAX = 1000;
+
+    private final Random random = new Random();
 
     private ComplexCalculator calculator;
 
@@ -69,5 +76,32 @@ public abstract class SimpleComplexCalculatorBaseTest {
 
         assertEquals(result.getReal(), 0.0, PRECISION);
         assertEquals(result.getImage(), Math.sqrt(2) * 5, PRECISION);
+    }
+
+
+    @Test
+    void calculateRandomCartesianSum() {
+        final int N = 8;
+        for (int i = 0; i < N; i++) {
+            double x1 = random.nextDouble(MIN, MAX);
+            double y1 = random.nextDouble(MIN, MAX);
+            double x2 = random.nextDouble(MIN, MAX);
+            double y2 = random.nextDouble(MIN, MAX);
+
+            Complex c1 = new Complex.Cartesian(x1, y1);
+            Complex c2 = new Complex.Cartesian(x2, y2);
+            ComplexOperation op = ComplexOperation.from(c1).add(ComplexOperation.from(c2));
+            checkOperation(op, new TestResult(x1 + x2, y1 + y2));
+        }
+    }
+
+    private void checkOperation(ComplexOperation op, TestResult golden) {
+        ComplexCalculator.Result result = getCalculator().calculate(op);
+        String msg = String.format("Operation: %s, golden: %s", op, golden);
+        assertEquals(result.getReal(), golden.real, PRECISION, msg);
+        assertEquals(result.getImage(), golden.image, PRECISION, msg);
+    }
+
+    private record TestResult(double real, double image) {
     }
 }
