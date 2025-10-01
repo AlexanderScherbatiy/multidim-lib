@@ -5,13 +5,13 @@ import org.multidim.complex.Complex;
 import org.multidim.complex.ComplexCalculator;
 import org.multidim.complex.ComplexOperation;
 
+import static org.multidim.calculator.simple.TestUtils.PRECISION;
+
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public abstract class SimpleComplexCalculatorBaseTest {
-
-    private static final double PRECISION = 0.01;
 
     private static final double MIN = -1000.0;
     private static final double MAX = 1000;
